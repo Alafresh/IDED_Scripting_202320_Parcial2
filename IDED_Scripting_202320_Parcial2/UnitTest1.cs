@@ -92,5 +92,81 @@ namespace IDED_Scripting_202320_Parcial2
             Assert.AreEqual(0, monster.Skill);  // Skill is forced to 0 for a Monster
             Assert.AreEqual(5, monster.Speed);  // Speed not modified
         }
+
+        [Test]
+        public void CreateWeapon_ValidModifiers_CreatesValidWeapon()
+        {
+            // Arrange
+            int attackModifier = 8;
+            int skillModifier = 2;
+
+            // Act
+            var weapon = new Weapon(attackModifier, skillModifier);
+
+            // Assert
+            Assert.IsNotNull(weapon);
+            Assert.AreEqual(attackModifier, weapon.AttackModifier);
+            Assert.AreEqual(0, weapon.DefenseModifier); // DefenseModifier should be 0
+            Assert.AreEqual(skillModifier, weapon.SkillModifier);
+            Assert.AreEqual(0, weapon.SpeedModifier); // SpeedModifier should be 0
+        }
+
+        [Test]
+        public void CreateArmor_ValidModifiers_CreatesValidArmor()
+        {
+            // Arrange
+            int defenseModifier = 7;
+            int speedModifier = 3;
+
+            // Act
+            var armor = new Armor(defenseModifier, speedModifier);
+
+            // Assert
+            Assert.IsNotNull(armor);
+            Assert.AreEqual(0, armor.AttackModifier); // AttackModifier should be 0
+            Assert.AreEqual(defenseModifier, armor.DefenseModifier);
+            Assert.AreEqual(0, armor.SkillModifier); // SkillModifier should be 0
+        }
+
+        [Test]
+        public void CreateAccessory_ValidModifiers_CreatesValidAccessory()
+        {
+            // Arrange
+            int attackModifier = 5;
+            int defenseModifier = 3;
+            int skillModifier = 2;
+            int speedModifier = 1;
+
+            // Act
+            var accessory = new Accessory(attackModifier, defenseModifier, skillModifier, speedModifier);
+
+            // Assert
+            Assert.IsNotNull(accessory);
+            Assert.AreEqual(attackModifier, accessory.AttackModifier);
+            Assert.AreEqual(defenseModifier, accessory.DefenseModifier);
+            Assert.AreEqual(skillModifier, accessory.SkillModifier);
+            Assert.AreEqual(speedModifier, accessory.SpeedModifier);
+        }
+        [Test]
+        public void AssignMoves_WarriorCharacter_ValidMove()
+        {
+            Weapon weapon = new Weapon(7, 1); // Ensure valid attack modifier for a Thief
+            Armor armor = new Armor(4, 6); // Ensure valid defense and speed modifiers
+            List<Accessory> accessories = new List<Accessory>
+            {
+                new Accessory(2, 1, 2, 3), // Sample accessory
+            };
+            // Create a Technique move (valid for a Warrior)
+            var techniqueMove = new Move { Name = "Slash", Power = 30, Type = MoveType.Technique };
+            // Arrange
+            var warrior = new WarriorClass("Warrior1", weapon, armor, accessories, techniqueMove, 10, 5, 0, 7); // Creating a Warrior character
+
+
+            // Assert
+            Assert.AreEqual(techniqueMove, warrior.Moves);
+        }
+
+        
+
     }
 }

@@ -34,7 +34,8 @@ namespace IDED_Scripting_202320_Parcial2
         {
             if ( attackModifier <= 10 && attackModifier > 5)
             {
-                SkillModifier += skillModifier;
+                SkillModifier = skillModifier;
+                AttackModifier = attackModifier;
             }
         }
     }
@@ -47,6 +48,7 @@ namespace IDED_Scripting_202320_Parcial2
             if (defenseModifier <=10 && defenseModifier >5)
             {
                 SpeedModifier -= speedModifier;
+                DefenseModifier = defenseModifier;
             }
                
         }
