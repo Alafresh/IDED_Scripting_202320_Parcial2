@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace IDED_Scripting_202320_Parcial2
 {
-        // Clase para representar las habilidades Moves
-    public abstract class Move
+    // Enumeración para los tipos de habilidades
+    public enum MoveType
     {
-            public string Name { get; set; }
-            public int Power { get; set; }
-            public string Type { get; set; }
+        Magic,
+        Technique,
+        Trick
+    }
+    // Clase para representar las habilidades Moves
+    public class Move
+    {
+        public string Name { get; set; }
+        public int Power { get; set; }
+        public MoveType Type { get; set; }
     }
 }

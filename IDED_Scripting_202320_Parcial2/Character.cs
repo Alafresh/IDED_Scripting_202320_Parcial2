@@ -11,74 +11,62 @@ namespace IDED_Scripting_202320_Parcial2
     public abstract class Character
     {
         public string Name { get; set; }
-        public Gear EquippedGear { get; set; }
-        public List<Move> Moves { get; set; }
+        public Weapon weapon { get; set; }
+        public Armor armor { get; set; }
+        public List<Accessory> accessories { get; set; }
+        public Move Moves { get; set; }
 
-        public int Attack { get; private set; }
-        public int Defense { get; private set; }
-        public int Skill { get; private set; }
-        public int Speed { get; private set; }
+        public int Attack { get; set; }
+        public int Defense { get; set; }
+        public int Skill { get; set; }
+        public int Speed { get; set; }
 
-        public Character()
+        public Character(string name, Weapon weapon, Armor armor, List<Accessory> accessories, Move moves, int attack, int defense, int skill, int speed)
         {
-            Moves = new List<Move>();
-        }
+            Name = name;
+            this.weapon = weapon;
+            this.armor = armor;
+            this.accessories = accessories;
+            Moves = moves;
+            Attack = attack + weapon.AttackModifier;
+            Defense = defense + armor.DefenseModifier;
+            Skill = skill;
+            Speed = speed;
 
-        public void CalculateStats()
-        {
-            // Calcular los atributos según el equipamiento y la clase de personaje
-            Attack = EquippedGear.AttackModifier;
-            Defense = EquippedGear.DefenseModifier;
-            Skill = EquippedGear.SkillModifier;
-            Speed = EquippedGear.SpeedModifier;
-
-            // Aplicar modificaciones adicionales según las habilidades del personaje
-            ApplyMoveEffects();
-        }
-
-        public void EquipGear(Gear gear)
-        {
-            // Implementar lógica para equipar piezas de equipamiento
-            if (gear == null)
+            if (accessories != null && accessories.Count <= 3)
             {
-                throw new ArgumentNullException(nameof(gear), "Gear cannot be null");
-            }   
-
-            EquippedGear = gear;
-            CalculateStats();
-        }
-
-        public void AssignMove(Move move)
-        {
-            // Implementar lógica para asignar habilidades al personaje
-            if (move == null)
-            {
-                throw new ArgumentNullException(nameof(move), "Move cannot be null");
+                foreach (var accessory in accessories)
+                {
+                    Attack += accessory.AttackModifier;
+                    Defense += accessory.DefenseModifier;
+                    Skill += accessory.SkillModifier;
+                    Speed += accessory.SpeedModifier;
+                }
             }
-            Moves.Add(move);
-        }
-
-        private void ApplyMoveEffects()
-        {
-            // Implementar lógica para aplicar efectos de habilidades al personaje
-            foreach (var move in Moves)
+            else
             {
-                // Aquí puedes definir cómo cada habilidad afecta los atributos del personaje
-                // Por ejemplo, si una habilidad aumenta el ataque en 10 puntos, puedes sumar 10 al atributo de ataque.
+                throw new ArgumentException("A character can't have more than 3 accessories.");
             }
+
         }
     }
 
     // Clase para representar a los personajes jugables
     public class PlayableCharacter : Character
     {
-        // Puedes agregar propiedades específicas de personajes jugables si es necesario
+        public PlayableCharacter(string name, Weapon weapon, Armor armor, List<Accessory> accessories, Move moves, int attack, int defense, int skill, int speed) 
+            : base(name, weapon, armor, accessories, moves, attack, defense, skill, speed)
+        {
+        }
     }
 
     // Clase para representar a los enemigos
     public class EnemyCharacter : Character
     {
-        // Puedes agregar propiedades específicas de enemigos si es necesario
+        public EnemyCharacter(string name, Weapon weapon, Armor armor, List<Accessory> accessories, Move moves, int attack, int defense, int skill, int speed) 
+            : base(name, weapon, armor, accessories, moves, attack, defense, skill, speed)
+        {
+        }
     }
 
 }
